@@ -4,7 +4,7 @@ package section3
  * Add three secondary constructors which will initialize its
  * propertys in different ways
  */
-class TextBuilder {
+open class TextBuilder {
     var capacity: Int = 0
     var content: String? = null
 
@@ -17,10 +17,17 @@ class TextBuilder {
     }
 
     constructor(_content: String?) {
-        content = _content
+        _content?.let {
+            content = _content
+        }
     }
 }
 
+class TextBuilderChild : TextBuilder {
+    constructor() : super()
+    constructor(capacity: Int) : super(capacity)
+    constructor(content: String?) : super(content)
+}
 /**
  * This exercise will demonstrate how to initial a class in different ways
  * of initializing a class
@@ -28,9 +35,9 @@ class TextBuilder {
 fun main(args: Array<String>) {
     // Create three instances of TextBuilder that call each
     // of the secondary constructors and display the results
-    val textBuilder1 = TextBuilder()
-    val textBuilder2 = TextBuilder(32)
-    val textBuilder3 = TextBuilder("Hello, World")
+    val textBuilder1 = TextBuilderChild()
+    val textBuilder2 = TextBuilderChild(32)
+    val textBuilder3 = TextBuilderChild("Hello, World")
 
     println(textBuilder1.capacity)
     println(textBuilder2.capacity)
