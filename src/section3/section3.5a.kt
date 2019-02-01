@@ -5,26 +5,17 @@ package section3
  * These will be replaced with a companion object method
  * to simply the code.
  */
-class CameraMode {
+class CameraMode private constructor(val mode: String) {
 
-    val mode: String
-
-    constructor() {
-        mode = "auto"
+    companion object {
+        fun setMode(shutter: Int = 0, aperture: Double = 0.0) =
+            when {
+                shutter > 0 && aperture > 0.0 -> CameraMode("manual")
+                shutter > 0 -> CameraMode("shutter priority")
+                aperture > 0.0 -> CameraMode("aperture priority")
+                else -> CameraMode("auto")
+            }
     }
-
-    constructor(shutter: Int) {
-        mode = "shutter priority"
-    }
-
-    constructor(aperture: Double) {
-        mode = "aperture priority"
-    }
-
-    constructor(shutter: Int, aperture: Double) {
-        mode = "manual"
-    }
-
 }
 
 /**
@@ -34,13 +25,9 @@ class CameraMode {
  */
 fun main(args: Array<String>) {
     // Create different instances of CameraMode then display it's mode property
-    val modeOne = CameraMode()
-    val modeTwo = CameraMode(2000)
-    val modeThree = CameraMode(1.2)
-    val modeFour = CameraMode(shutter = 2000, aperture = 1.2)
-    println(modeOne.mode)
-    println(modeTwo.mode)
-    println(modeThree.mode)
-    println(modeFour.mode)
+    println(CameraMode.setMode().mode)
+    println(CameraMode.setMode(1000).mode)
+    println(CameraMode.setMode(aperture = 1.2).mode)
+    println(CameraMode.setMode(1000, 1.2).mode)
 }
 
